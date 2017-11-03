@@ -1,0 +1,47 @@
+part1:
+  # create mlp model
+  model = Sequential()
+  model.add(Dense(3, input_dim=8, activation='sigmoid'))
+  model.add(Dense(2, activation='softmax'))
+
+  # define optimizer
+  sgd = optimizers.SGD(lr=0.3, momentum=0.2, decay=0.0, nesterov=False)
+
+  # compile model
+  model.compile(loss='binary_crossentropy',
+                optimizer=sgd,
+                metrics=['accuracy'])
+
+  # train model on training data
+  history = model.fit(x_train, y_train, batch_size=100, epochs=500,
+            verbose=0, validation_split=0.1)
+
+  acc: 0.861702121319
+
+part2:
+  1. change the loss function of the hidden layer to Rectified Linear Unit (“ReLu”). 
+  acc: 0.840425526842
+
+  2. change the number of nodes in the hidden layer to 1, 2, 4 and 5. 
+  1 node acc: 0.882978725941
+  2 node acc: 0.861702121319
+  4 node acc: 0.872340428068
+  5 node acc: 0.872340428068
+
+  3. Create a network with two hidden layers, each with 3 nodes 
+  model = Sequential()
+  model.add(Dense(3, input_dim=8, activation='sigmoid'))
+  model.add(Dense(3, activation='sigmoid'))
+  model.add(Dense(2, activation='softmax'))
+  
+  acc: 0.702127660684
+
+part3:
+  1. reduce the learning rate to 0.2, 0.1 and 0.01.
+  lr 0.2 acc: 0.882978727209
+  lr 0.1 acc: 0.8085106402
+  lr 0.01 acc: 0.702127660684
+
+  2. replace SGD with the 'adam' optimizer 
+  adam = optimizers.Adam(lr=0.01, beta_1=0.9, beta_2=0.999, epsilon=1e-08, decay=0.0)
+  acc: 0.808510631957
